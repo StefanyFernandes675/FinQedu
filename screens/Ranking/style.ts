@@ -22,4 +22,8 @@ export const styles = StyleSheet.create({
     paddingVertical: 16,
     textAlign: 'center',
   },
+  textNoData: {
+    textAlign: 'center',
+    color: COLORS.purpleDark
+  }
 });

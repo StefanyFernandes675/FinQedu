@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "finq",
+    "name": "FinQedu",
     "slug": "snack-591fb4e4-f93c-492d-9d0e-de5d4a9600eb",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -12,17 +12,25 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sstandall03.snack591fb4e4f93c492d9d0ede5d4a9600eb"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "versionCode": 2,  
+      "package": "com.sstandall03.snack591fb4e4f93c492d9d0ede5d4a9600eb"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "App da FinQ"
+    "description": "App FinQedu",
+    "extra": {
+      "eas": {
+        "projectId": "e1acc449-f558-41d7-8f51-70ebc46e7f84"
+      }
+    }
   }
 }

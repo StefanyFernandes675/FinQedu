@@ -116,7 +116,7 @@ export default function Ranking() {
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
-            !refreshing && <Text style={styles.textNoData}>Nenhum dado encontrado</Text>
+            !refreshing && <Text style={styles.textNoData}>It looks like you haven't taken any quiz yet. Test your knowledge and see how you rank</Text>
           }
         />
       </SafeAreaView>
