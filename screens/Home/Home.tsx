@@ -61,7 +61,7 @@ export default function Home({ navigation }) {
         <Text style={styles.textTitle}>👋 Hey, {name}!</Text>
         <View style={styles.watched}>
           <Text style={styles.watchedText}>Ranking 🏆</Text>
-          <Text style={styles.watchedTotal}>chooseRankingName();</Text>
+          <Text style={styles.watchedTotal}>{chooseRankingName()}</Text>
         </View>
         <Text style={styles.textMarket}>Market Place</Text>
         <Slider />
