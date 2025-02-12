@@ -55,7 +55,7 @@ export default function Ranking() {
 
   // Função para buscar o ranking
   const fetchRanking = async () => {
-    if (!id) return; // Evita requisição desnecessária se o ID não estiver carregado
+    if (!id) return; 
     try {
       const response = await fetch('https://finq-app-back-api.onrender.com/ranking', {
         method: 'POST',
@@ -95,7 +95,7 @@ export default function Ranking() {
     };
 
     loadInitialData();
-  }, []); // Sem dependências adicionais
+  }, []); 
 
   return (
     <ScrollView

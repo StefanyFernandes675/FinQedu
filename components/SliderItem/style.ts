@@ -11,5 +11,7 @@ export const styles = StyleSheet.create({
   image: {
     resizeMode: 'contain',
     alignSelf: 'center', 
+    height: 200,
+    width: 320,
   }
 });

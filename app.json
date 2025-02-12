@@ -2,7 +2,7 @@
   "expo": {
     "name": "FinQedu",
     "slug": "snack-591fb4e4-f93c-492d-9d0e-de5d4a9600eb",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -20,7 +20,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 2,  
+      "versionCode": 3,  
       "package": "com.sstandall03.snack591fb4e4f93c492d9d0ede5d4a9600eb"
     },
     "web": {

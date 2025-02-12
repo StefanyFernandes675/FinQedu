@@ -13,10 +13,10 @@ export const styles = StyleSheet.create({
   textCategory: {
     fontFamily: 'inter',
     fontSize: 14,
-    backgroundColor: COLORS.purpleDark,
+    backgroundColor: COLORS.purple,
     padding: 14,
     color: '#FFF',
-    borderRadius: 6,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: COLORS.purpleDark
   },
@@ -28,26 +28,26 @@ export const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   image: {
-    width: 20,
+    width: 40,
     height: 20,
     resizeMode: 'contain'
   },
   textStreak: {
     fontFamily: 'inter',
     fontSize: 14,
-    fontWeight: 700,
+    fontWeight: '700',
     color: COLORS.purpleDark
   },
   textMoney: {
     fontFamily: 'inter',
     fontSize: 14,
-    fontWeight: 700,
+    fontWeight: '700',
     color: '#59C36A'
   },
   textHeart: {
     fontFamily: 'inter',
     fontSize: 14,
-    fontWeight: 700,
+    fontWeight: '700',
     color: COLORS.purpleDark
   },
 });
