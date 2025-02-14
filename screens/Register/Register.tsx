@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from './style';
 
@@ -131,6 +131,7 @@ export default function Registration({ navigation }) {
       return data;
     } catch (error) {
       console.error(error);
+      throw error; // rethrow to handle in the calling function
     } finally {
       setIsLoading(false);
     }
@@ -148,13 +149,14 @@ export default function Registration({ navigation }) {
       interest_areas: formData.preferences,
     };
     try {
-      createAccount(userData)
-      .then((response) => {
-        if (response) navigation.navigate('WelcomeRegister');
-      })
+      const response = await createAccount(userData);
+      if (response) {
+        console.log('Account created successfully');
+        navigation.navigate('WelcomeRegister');
+      }
     } catch (error) {
-      console.error(error);
-      setShowErrorModal(true);
+      console.error('Error during registration:', error);
+      setShowErrorModal(true);  // This should show the error modal
     } finally {
       setIsLoading(false);
     }
@@ -283,7 +285,7 @@ export default function Registration({ navigation }) {
         navigationButton={'Login'}
       />
 
-      {/* Indicador de carregamento */}
+      {/* Loading Indicator */}
       {isLoading && (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={COLORS.purpleLight} />
@@ -306,7 +308,10 @@ export default function Registration({ navigation }) {
           <View style={styles.buttonContainer}>
             <Button
               text={step === 5 ? 'Get Started' : 'Next'}
-              onpress={handleNext}
+              onpress={() => {
+                console.log("Button pressed, step valid:", isStepValid());
+                handleNext();
+              }}
               disabled={!isStepValid()}
             />
           </View>
