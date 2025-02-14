@@ -58,4 +58,27 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: COLORS.purpleDark,
   },
+  rankContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  rankBadge: {
+    width: 24,
+    height: 24,
+    marginRight: 8,
+  },
+  rankText: {
+    fontSize: 14,
+    color: COLORS.purpleDark,
+    fontWeight: 'bold',
+  },
+  loadingText: {
+    fontSize: 18,
+    textAlign: 'center',
+    color: COLORS.purpleDark,
+  },
+  rankBadgeContainer: {
+    marginTop: 20,
+  },
 });

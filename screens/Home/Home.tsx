@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, Image } from 'react-native';
 import Slider from '../../components/Slider/Slider';
 import Header from '../../components/Header/Header';
+import Divider from '../../components/Divider/Divider';
 import * as Progress from 'react-native-progress';
 
 import {styles} from './style';
@@ -63,6 +64,7 @@ export default function Home({ navigation }) {
           <Text style={styles.watchedText}>Ranking 🏆</Text>
           <Text style={styles.watchedTotal}>{chooseRankingName()}</Text>
         </View>
+        <Divider />
         <Text style={styles.textMarket}>Market Place</Text>
         <Slider />
       </View>
