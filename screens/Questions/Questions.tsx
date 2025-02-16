@@ -151,12 +151,12 @@ const Questions = ({ navigation, route }) => {
       const response = await axios.post('https://finq-app-back-api.onrender.com/quiz/finish', {
         userId: userId,
       });
-      const { lifes, dollars, streak} = response.data;
-      if (lifes > 0) {
+      const { life, dollars, streak} = response.data;
+      if (life > 0) {
         setRandomLessonImage(chooseRandomImage());
         setSuccessModalVisible(true);
         handleRanking(userId, dollars);
-        updateQuizStats({streak: streak, lifes: lifes, dollars: dollars})
+        updateQuizStats({streak: streak, lifes: life, dollars: dollars})
       } else {
         setFailureModalVisible(true);
       }
@@ -279,8 +279,8 @@ const Questions = ({ navigation, route }) => {
           <View style={styles.modalBackground}>
             <View style={styles.modalContent}>
               <Image source={CryFinq} style={styles.imageModal} />
-              <Text style={styles.modalTitle}>Let's try again</Text>
-              <Text style={styles.modalDescription}>You are out of lives</Text> {/* Corrigido */}
+              <Text style={styles.modalTitle}>Try again</Text>
+              <Text style={styles.modalDescription}>You are out of lifes</Text> 
               <TouchableOpacity
                 style={styles.modalButton}
                 onPress={() => {

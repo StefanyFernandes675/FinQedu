@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     marginVertical: 20, 
   },
   answerButton: { 
-    padding: 10, 
+    padding: 20, 
     backgroundColor: 'white', 
     marginBottom: 10, 
     borderRadius: 10,
