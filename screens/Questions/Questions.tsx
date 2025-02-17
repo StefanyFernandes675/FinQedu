@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, TouchableOpacity, Modal, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, Image, Dimensions } from 'react-native';
 import axios from 'axios';
 import eventEmitter from '../../components/events';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from './style';
+const { width } = Dimensions.get('window');
 
-// Importação das imagens das corujas
 import Owl1 from '../../assets/owl_quiz1.png';
 import Owl2 from '../../assets/owl_quiz2.png';
 import Owl3 from '../../assets/owl_quiz3.png'; 
@@ -57,8 +57,9 @@ const Questions = ({ navigation, route }) => {
     if (correct) {
       handleSubmit(answerId);
     } else {
-      setLives(lives - 1);
-      if (lives - 1 === 0) {
+      const newLives = lives - 1;
+      setLives(newLives);
+      if (newLives === 0) {
         setFailureModalVisible(true);
       } else if (currentQuestionIndex === questions.length - 1) {
         finishQuiz(); 
@@ -151,12 +152,13 @@ const Questions = ({ navigation, route }) => {
       const response = await axios.post('https://finq-app-back-api.onrender.com/quiz/finish', {
         userId: userId,
       });
-      const { life, dollars, streak} = response.data;
-      if (life > 0) {
+      const { lifes, dollars, streak} = response.data;
+      console.log(lifes, dollars, streak);
+      if (lifes > 0) {
         setRandomLessonImage(chooseRandomImage());
         setSuccessModalVisible(true);
         handleRanking(userId, dollars);
-        updateQuizStats({streak: streak, lifes: life, dollars: dollars})
+        updateQuizStats({streak: streak, lifes: lifes, dollars: dollars})
       } else {
         setFailureModalVisible(true);
       }
@@ -200,10 +202,14 @@ const Questions = ({ navigation, route }) => {
         break;
     }
 
+    const imageWidth = width * 0.3; 
+    const imageHeight = imageWidth;
+
     return (
       <View style={styles.quizContainer}>
         <Text style={styles.title}>{question.question}</Text>
-        <Image source={owlImage} style={styles.owlImage} />
+        <Image source={owlImage} 
+          style={[styles.owlImage, { width: imageWidth, height: imageHeight }]} />
         {question.answers.map((answer) =>
           renderAnswerButton(answer, answer.answer === 'Correct')
         )}
@@ -242,7 +248,9 @@ const Questions = ({ navigation, route }) => {
           <Modal visible={successModalVisible} transparent={true} animationType="slide">
             <View style={styles.modalBackground}>
               <View style={styles.modalContent}>
-                <Image source={randomLessonImage} style={styles.imageModal} />
+                <Image source={randomLessonImage}
+                  style={[styles.imageModal, { width: width * 0.5, height: width * 0.5 }]}
+                />
                 <Text style={styles.modalTitle}>You've completed the lesson!</Text>
                 <View style={styles.row}>
                   <View style={styles.column}>
