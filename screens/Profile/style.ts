@@ -9,7 +9,24 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
   },
+  containerInitials: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.purpleDark,
+    padding: 20,
+    borderRadius: 100,
+    borderWidth: 5,
+    borderColor: COLORS.purpleLight,
+    width: 160,
+    height: 160
+  },
+  textIntitials: {
+    fontSize: 50,
+    color: '#fff',
+    fontFamily: 'archivo'
+  },
   containerNameFlag: {
+    marginTop: 24,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

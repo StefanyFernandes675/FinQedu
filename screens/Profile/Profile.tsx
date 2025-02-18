@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Text, Image, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, Image, ScrollView, RefreshControl, Dimensions } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress';
 import eventEmitter from '../../components/events';
@@ -19,6 +19,8 @@ import VP from '../../assets/vp-badge.png';
 import SeniorVP from '../../assets/seniorvp-badge.png';
 import MD from '../../assets/md-badge.png';
 
+const {width} = Dimensions.get('window');
+
 export default function Profile({ navigation }) {
   const [total, setTotal] = useState(1);
   const [watched, setWatched] = useState(1);
@@ -26,6 +28,7 @@ export default function Profile({ navigation }) {
   const [streak, setStreak] = useState(0);
   const [money, setMoney] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
+  const [initials, setInitials] = useState('FinQ');
   
   const progress = watched / total;
 
@@ -40,6 +43,9 @@ export default function Profile({ navigation }) {
         const nameParts = (parsedUser.name || 'Finq Owl').split(' ');
         const twoNames = nameParts.slice(0, 2).join(' ');
         setName(twoNames);
+
+        const initials = nameParts.slice(0, 2).map(name => name.charAt(0).toUpperCase()).join('');
+        setInitials(initials);
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -105,8 +111,8 @@ export default function Profile({ navigation }) {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
-      <View>
-        <Image source={Badge} />
+      <View style={[styles.containerInitials, {width: width * 0.3, height: width * 0.3}]}>
+        <Text style={styles.textIntitials}>{initials}</Text>
       </View>
       <View>
         <View style={styles.containerNameFlag}>
