@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { SafeAreaView, Text, FlatList, Image, RefreshControl, ScrollView } from 'react-native';
+import { SafeAreaView, Text, FlatList, Image, RefreshControl, ScrollView , Dimensions} from 'react-native';
 import { styles } from './style';
 import RankingItem from '../../components/RankingItem/RankingItem';
 import Header from '../../components/Header/Header';
@@ -12,13 +12,15 @@ import VP from '../../assets/vp-badge.png';
 import SeniorVP from '../../assets/seniorvp-badge.png';
 import MD from '../../assets/md-badge.png';
 
+const { width } = Dimensions.get('window');
+
 export default function Ranking() {
   const [id, setId] = useState('');
   const [users, setUsers] = useState([]);
   const [money, setMoney] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState('');
 
-  // Função para escolher a imagem de ranking com base no dinheiro
   const chooseRankingImage = () => {
     const images = [Intern, Analyst, Associate, VP, SeniorVP, MD];
 
@@ -39,7 +41,6 @@ export default function Ranking() {
     return images[level - 1];
   };
 
-  // Função para buscar os dados do usuário
   const getUserData = async () => {
     try {
       const user = await AsyncStorage.getItem('user');
@@ -53,9 +54,9 @@ export default function Ranking() {
     }
   };
 
-  // Função para buscar o ranking
   const fetchRanking = async () => {
     if (!id) return; 
+
     try {
       const response = await fetch('https://finq-app-back-api.onrender.com/ranking', {
         method: 'POST',
@@ -66,37 +67,52 @@ export default function Ranking() {
       });
 
       if (!response.ok) {
-        throw new Error(`Erro ao buscar o ranking: ${response.statusText}`);
+        const errorData = await response.json();
+        if (errorData.message && errorData.message.includes("Invalid uuid")) {
+          setError("It looks like you have not taken any quiz yet. Test your knowledge and see how you rank or refresh the page.");
+          setUsers([]); 
+        } else {
+          throw new Error(`Erro ao buscar o ranking: ${response.statusText}`);
+        }
+        return;
       }
 
       const data = await response.json();
       if (data && data.users) {
         const sortedUsers = data.users.sort((a, b) => b.experience - a.experience);
         setUsers(sortedUsers);
+        setError(''); 
       }
     } catch (error) {
       console.error('Erro ao carregar o ranking:', error);
+      setError('Failed to load ranking. Please try again later.');
+      setUsers([]);
     }
   };
 
-  // Função de pull-to-refresh
   const onRefresh = async () => {
     setRefreshing(true);
-    await getUserData();
-    await fetchRanking();
+    await getUserData(); 
+    if (id) {
+      await fetchRanking();
+    }
     setRefreshing(false);
   };
 
-  // Carrega os dados iniciais ao montar o componente
   useEffect(() => {
     const loadInitialData = async () => {
-      await getUserData();
-      await fetchRanking();
+      await getUserData(); 
     };
 
     loadInitialData();
-  }, []); 
+  }, []);
 
+  useEffect(() => {
+    if (id) {
+      fetchRanking();
+    }
+  }, [id]);
+  
   return (
     <ScrollView
       contentContainerStyle={styles.container}
@@ -107,18 +123,22 @@ export default function Ranking() {
       <SafeAreaView style={styles.container}>
         <Header />
         <Text style={styles.textRanking}>Ranking</Text>
-        <Image source={chooseRankingImage()} style={styles.image} />
-        <FlatList
-          data={users}
-          renderItem={({ item, index }) => (
-            <RankingItem item={item} index={index} id={id} />
-          )}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={
-            !refreshing && <Text style={styles.textNoData}>It looks like you haven't taken any quiz yet. Test your knowledge and see how you rank</Text>
-          }
-        />
+        <Image source={chooseRankingImage()} style={[styles.image, {width: width * 0.3, height: width * 0.3}]} />
+
+        {/* Exibe a mensagem de erro ou ranking */}
+        {error ? (
+          <Text style={styles.textNoData}>{error}</Text>
+        ) : (
+          <FlatList
+            data={users}
+            renderItem={({ item, index }) => (
+              <RankingItem item={item} index={index} id={id} />
+            )}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={<Text style={styles.textNoData}>Loading...</Text>}
+          />
+        )}
       </SafeAreaView>
     </ScrollView>
   );

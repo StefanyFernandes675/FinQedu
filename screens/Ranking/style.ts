@@ -23,7 +23,8 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   textNoData: {
+    fontSize: 24,
+    color: COLORS.purpleDark,
     textAlign: 'center',
-    color: COLORS.purpleDark
   }
 });
